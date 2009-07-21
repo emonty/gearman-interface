@@ -1,0 +1,12 @@
+python/drizzle/libdrizzle.py
+ChangeLog
+Makefile.in
+aclocal.m4
+config.h.in
+configure
+depcomp
+missing
+python/libgearman.cc
+python/gearman/libgearman.py
+python/gearman/release.py
+python/build
