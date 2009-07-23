@@ -19,17 +19,9 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-%module libgearman
-%include "typemaps.i"
+%typemap(out) void * {
 
-
-%include "interface/globals.i"
-
-%include "interface/python/worker_callback.i"
-%include "interface/python/do_return.i"
-
-%include "interface/libgearman/gearman.i"
-%include "interface/libgearman/client.i"
-%include "interface/libgearman/worker.i"
+  $1=PyBuffer_FromMemory($1);
+}
 
 

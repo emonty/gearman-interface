@@ -1,7 +1,7 @@
 /* -*- mode: c++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
  *  vim:expandtab:shiftwidth=2:tabstop=2:smarttab:
  *
- *  gearman-interface: Interface Wrappers for Drizzle
+ *  gearman-interface: Interface Wrappers for Gearman
  *  Copyright (C) 2008 Sun Microsystems, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -52,31 +52,31 @@ struct Worker {};
     return gearman_worker_add_server($self, host, port);
   }   
 
-  gearman_return_t addServer(const char *host) {
+  gearman_return addServer(const char *host) {
     return gearman_worker_add_server($self,
                                      GEARMAN_DEFAULT_TCP_HOST,
                                      GEARMAN_DEFAULT_TCP_PORT);
   }   
 
-  gearman_return_t addServer() {
+  gearman_return addServer() {
     return gearman_worker_add_server($self,
                                      GEARMAN_DEFAULT_TCP_HOST,
                                      GEARMAN_DEFAULT_TCP_PORT);
   }   
 
-  gearman_return_t addServers(const char *servers) {
+  gearman_return addServers(const char *servers) {
     return gearman_worker_add_servers($self, servers);
   }
 
-  gearman_return_t registerFunction(const char *function_name, uint32_t timeout) {
+  gearman_return registerFunction(const char *function_name, uint32_t timeout) {
     return gearman_worker_register($self, function_name, timeout);
   }
 
-  gearman_return_t unregisterFunction(const char *function_name) {
+  gearman_return unregisterFunction(const char *function_name) {
     return gearman_worker_unregister($self, function_name);
   }
 
-  gearman_return_t unregisterAll() {
+  gearman_return unregisterAll() {
     return gearman_worker_unregister_all($self);
   }
 
@@ -84,23 +84,23 @@ struct Worker {};
    * @TODO: Handle Error
    */
   Job *grabJob() {
-    gearman_return_t ret;
+    gearman_return ret;
     return gearman_worker_grab_job($self, NULL, &ret);
   }
 
-  gearman_return_t addFunction(const char *function_name, uint32_t timeout,
+  gearman_return addFunction(const char *function_name, uint32_t timeout,
                              gearman_callback *worker_fn)
   {
     return gearman_worker_add_function($self, function_name, timeout,
                                        workerCallback, (void *)worker_fn);
   }
 
-  gearman_return_t work() {
+  gearman_return work() {
     return gearman_worker_work($self);
   }
 
   /**
    * @TODO: do echo - some mapping of bytes to void * perhaps?
    */
-  /*  gearman_return_t echo(const void *workload); */
+  /*  gearman_return echo(const void *workload); */
 };
