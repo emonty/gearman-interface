@@ -65,7 +65,7 @@ struct Client {};
   }   
 
   gearman_return_t addServers(const char *servers) {
-    return gearman_worker_add_servers($self, servers);
+    return gearman_client_add_servers($self, servers);
   }
 
 
@@ -73,12 +73,11 @@ struct Client {};
    * @TODO Handle errors
    */
   void *doJob(const char *function_name, const char *unique,
-                   const void *workload, size_t workload_size)
+              const void *workload, size_t workload_size, size_t *result_size)
   {
     gearman_return_t ret;
-    size_t result_size;
     void *results= gearman_client_do($self, function_name, unique, workload,
-                                     workload_size, &result_size, &ret);
+                                     workload_size, result_size, &ret);
 
     return results;
   }
@@ -87,12 +86,11 @@ struct Client {};
    * @TODO Handle errors
    */
   void *doHigh(const char *function_name, const char *unique,
-                    const void *workload, size_t workload_size)
+               const void *workload, size_t workload_size, size_t *result_size)
   {
     gearman_return_t ret;
-    size_t result_size;
     void *results= gearman_client_do_high($self, function_name, unique, workload,
-                                          workload_size, &result_size, &ret);
+                                          workload_size, result_size, &ret);
 
     return results;
   }
@@ -101,12 +99,11 @@ struct Client {};
    * @TODO Handle errors
    */
   void *doLow(const char *function_name, const char *unique,
-                   const void *workload, size_t workload_size)
+              const void *workload, size_t workload_size, size_t *result_size)
   {
     gearman_return_t ret;
-    size_t result_size;
     void *results= gearman_client_do_low($self, function_name, unique, workload,
-                                         workload_size, &result_size, &ret);
+                                         workload_size, result_size, &ret);
 
     return results;
   }

@@ -19,9 +19,24 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+%typemap(in) (const void *workload, size_t workload_size) {
+    char *py_result_str= PyString_AsString($input);
+    $2= (size_t)PyString_Size($input);
+    /* TODO: Make this use PyMem_Malloc - talk to eric about
+     * how the malloc args work
+     */
+    $1= malloc($2);
+    memcpy($1, py_result_str, $2);
+  
+}
+
+%typemap(in, numinputs=0) size_t *result_size (size_t rsize) {
+  $1= &rsize;
+}
+
 %typemap(out) void * {
 
-  $1=PyBuffer_FromMemory($1);
+  $1=PyBuffer_FromMemory($1, arg5);
 }
 
 
