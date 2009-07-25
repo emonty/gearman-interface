@@ -1,24 +1,15 @@
 dnl -*- mode: m4; c-basic-offset: 2; indent-tabs-mode: nil; -*-
 dnl vim:expandtab:shiftwidth=2:tabstop=2:smarttab:
 dnl   
-dnl drizzle-interface: Interface Wrappers for Drizzle
-dnl Copyright (C) 2008 Sun Microsystems, Inc.
-dnl 
-dnl This program is free software; you can redistribute it and/or modify
-dnl it under the terms of the GNU General Public License as published by
-dnl the Free Software Foundation; either version 2 of the License, or
-dnl (at your option) any later version.
-dnl 
-dnl This program is distributed in the hope that it will be useful,
-dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
-dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-dnl GNU General Public License for more details.
-dnl 
-dnl You should have received a copy of the GNU General Public License
-dnl along with this program; if not, write to the Free Software
-dnl Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+dnl pandora-build: A pedantic build system
+dnl Copyright (C) 2009 Sun Microsystems, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+dnl
+dnl From Monty Taylor
 
-AC_DEFUN([WITH_LUA],[
+AC_DEFUN([PANDORA_WITH_LUA],[
     dnl Check for lua
     AC_ARG_WITH([lua], 
     [AS_HELP_STRING([--with-lua],
@@ -49,5 +40,6 @@ AC_DEFUN([WITH_LUA],[
    AC_SUBST(LUA_CFLAGS)
    AC_SUBST(LUA_LIBS)
   ])
+  AM_CONDITIONAL(BUILD_LUA, test "$with_lua" = "yes")
 
 ])

@@ -10,3 +10,4 @@ python/libgearman.cc
 python/gearman/libgearman.py
 python/gearman/release.py
 python/build
+python/libgearman.c
