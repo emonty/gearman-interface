@@ -19,8 +19,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-
-struct Client {};
+typedef struct gearman_client_st {} Client;
 
 %extend Client {
 

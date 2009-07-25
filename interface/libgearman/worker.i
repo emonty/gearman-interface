@@ -20,7 +20,7 @@
  */
 
 
-struct Worker {};
+typedef struct gearman_worker_st {} Worker;
 
 %extend Worker {
 

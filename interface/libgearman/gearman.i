@@ -26,9 +26,8 @@
 const char *gearman_version(void);
 const char *gearman_bugreport(void);
 
-%rename(Gearman) gearman;
 
-class Gearman {};
+typedef struct gearman_st {} Gearman;
 
 
 %extend Gearman {

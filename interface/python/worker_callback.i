@@ -58,7 +58,7 @@
     if (py_error != NULL)
     {
       *ret_ptr= GEARMAN_WORK_EXCEPTION;
-      *result_size= NULL;
+      *result_size= 0;
       PyErr_Clear();
       return NULL;
     }
@@ -92,7 +92,7 @@
     void *result_bytes= malloc(*result_size+1); 
     memcpy(result_bytes, py_result_str, *result_size);
 
-/*    PyMem_FreeMem(cb); */
+    PyMem_Free(cb);
     Py_DECREF(result);
     Py_DECREF(func);
     Py_DECREF(arglist);

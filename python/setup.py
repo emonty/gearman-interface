@@ -53,7 +53,7 @@ setup(name="python-gearman",
 
       ext_modules=[
         Extension("gearman._libgearman",
-                  sources=["libgearman.cc"],
+                  sources=["libgearman.c"],
                   libraries=["gearman"],
                   ),
         ],

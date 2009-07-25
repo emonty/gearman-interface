@@ -41,6 +41,10 @@ typedef enum enum_gearman_exception {
 
 %}
 
+%typedef struct gearman_client_st Client;
+%typedef struct gearman_worker_st Worker;
+
+
 %ignore gearman_workload_fn;
 %ignore gearman_created_fn;
 %ignore gearman_data_fn;

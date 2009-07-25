@@ -27,8 +27,8 @@ DISTCLEANFILES=
 SUBDIRS=
 
 if BUILD_PYTHON_SUBDIR
-  BUILT_SOURCES += python/libgearman.cc python/gearman/_libgearman.so
-  CLEANFILES += python/libgearman.cc python/gearman/libgearman.py python/gearman/_libgearman.so python/gearman/*pyc
+  BUILT_SOURCES += python/libgearman.c python/gearman/_libgearman.so
+  CLEANFILES += python/libgearman.c python/gearman/libgearman.py python/gearman/_libgearman.so python/gearman/*pyc
   DISTCLEANFILES += python/gearman/librelease.py
 endif
 
@@ -41,10 +41,10 @@ distclean-local:
 
 test: check
 
-python/gearman/_libgearman.so: python/libgearman.cc
+python/gearman/_libgearman.so: python/libgearman.c
 	@cd python ;python setup.py build_ext --inplace
 
-python/libgearman.cc: interface/python/libgearman.i
+python/libgearman.c: interface/python/libgearman.i
 	@test ! -d $(builddir)/python/gearman && cp -a $(srcdir)/python/gearman $(builddir)/python || true
 
 	${SWIG} -python -O -outdir ${builddir}/python/gearman -o $@ $<
