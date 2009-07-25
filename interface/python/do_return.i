@@ -36,7 +36,7 @@
 
 %typemap(out) void * {
 
-  $1=PyBuffer_FromMemory($1, arg5);
+  $result=PyBuffer_FromMemory($1, arg4);
 }
 
 

@@ -22,7 +22,6 @@
 %module libgearman
 %include "typemaps.i"
 
-
 %include "interface/globals.i"
 
 %include "interface/python/worker_callback.i"

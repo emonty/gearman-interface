@@ -33,7 +33,6 @@ typedef struct gearman_st Gearman;
 typedef struct gearman_client_st Client;
 typedef struct gearman_worker_st Worker;
 typedef struct gearman_job_st Job;
-typedef gearman_return_t gearman_return;
 typedef void do_return;
 
 typedef enum enum_gearman_exception {

@@ -47,18 +47,14 @@
   {
     gearman_callback *cb= (gearman_callback *)fn_arg;
     PyObject *func = cb->callback_obj;   // Get Python callable
-    PyMem_Free(fn_arg);
     PyObject *job_obj = PyBuffer_FromMemory((void *)gearman_job_workload(job),
                                             gearman_job_workload_size(job));
 
     PyObject *arglist = Py_BuildValue("(O)", job_obj);
 
-    PyObject *result= PyEval_CallObject(func, arglist);
+    PyObject *result= PyObject_CallObject(func, arglist);
+
     PyObject *py_error= PyErr_Occurred();
-
-    Py_DECREF(func);
-    Py_DECREF(arglist);
-
     if (py_error != NULL)
     {
       *ret_ptr= GEARMAN_WORK_EXCEPTION;
@@ -66,16 +62,44 @@
       PyErr_Clear();
       return NULL;
     }
+
     *ret_ptr= GEARMAN_SUCCESS;
-    char *py_result_str= PyString_AsString(result);
-    *result_size= (size_t)PyString_Size(result);
+    char *py_result_str= NULL;
+    if (PyString_Check(result)) {
+      py_result_str= PyString_AsString(result);
+      *result_size= (size_t)PyString_Size(result);
+    } else if (PyByteArray_Check(result)) {
+      py_result_str= PyByteArray_AsString(result);
+      *result_size= (size_t)PyByteArray_Size(result);
+    } else if (PyBuffer_Check(result)) {
+      if (result == job_obj)
+      {
+        py_result_str= (char *)gearman_job_workload(job);
+        *result_size= gearman_job_workload_size(job);
+      } else {
+        printf("error!\n");
+        return NULL;
+      }
+    } else {
+      printf("error\n");
+      return NULL;
+    }
+      
+  
     /* TODO: Make this use PyMem_Malloc - talk to eric about
      * how the malloc args work
      */
-    void *result_bytes= malloc(*result_size); 
+    void *result_bytes= malloc(*result_size+1); 
     memcpy(result_bytes, py_result_str, *result_size);
+
+/*    PyMem_FreeMem(cb); */
+    Py_DECREF(result);
+    Py_DECREF(func);
+    Py_DECREF(arglist);
+
     return result_bytes;
     
   }
+
 %}
 
