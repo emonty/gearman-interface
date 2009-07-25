@@ -51,16 +51,13 @@ if BUILD_RUBY
   ruby_libgearman_la_CPPFLAGS=  ${AM_CPPFLAGS} ${RUBY_INCLUDES}
   ruby_libgearman_la_CFLAGS=
   ruby_libgearman_la_SOURCES= ruby/libgearman.c
-  ruby_libgearman_la_LDFLAGS = -avoid-version -module ${RUBY_LDFLAGS}
+  ruby_libgearman_la_LDFLAGS= -avoid-version -module ${RUBY_LDFLAGS}
 
 endif
 
 ruby/libgearman.c: interface/ruby/libgearman.i
 	${SWIG} -ruby -o $@ $<
 
-
-# perllocal.pod gets appended to, so we never want to delete it for real.
-distuninstallcheck_listfiles=find . -type f \! -name  perllocal.pod -print 
 
 distclean-local:
 	$(RM) -fr autom4te.cache
