@@ -92,9 +92,7 @@
     void *result_bytes= malloc(*result_size+1); 
     memcpy(result_bytes, py_result_str, *result_size);
 
-    PyMem_Free(cb);
     Py_DECREF(result);
-    Py_DECREF(func);
     Py_DECREF(arglist);
 
     return result_bytes;
