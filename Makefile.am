@@ -26,11 +26,37 @@ CLEANFILES=
 DISTCLEANFILES=
 SUBDIRS=
 
-if BUILD_PYTHON_SUBDIR
+if BUILD_PYTHON
   BUILT_SOURCES += python/libgearman.c python/gearman/_libgearman.so
   CLEANFILES += python/libgearman.c python/gearman/libgearman.py python/gearman/_libgearman.so python/gearman/*pyc
   DISTCLEANFILES += python/gearman/librelease.py
 endif
+
+python/gearman/_libgearman.so: python/libgearman.c
+	@cd python ;python setup.py build_ext --inplace
+
+python/libgearman.c: interface/python/libgearman.i
+	@test ! -d $(builddir)/python/gearman && cp -a $(srcdir)/python/gearman $(builddir)/python || true
+
+	${SWIG} -python -O -outdir ${builddir}/python/gearman -o $@ $<
+
+rubydir= ${RUBY_DIR}
+ruby_LTLIBRARIES=
+if BUILD_RUBY
+  BUILT_SOURCES += ruby/libgearman.c
+  EXTRA_DIST += ruby/libgearman.c
+  CLEANFILES += ruby/libgearman.c
+  ruby_LTLIBRARIES += ruby/libgearman.la
+
+  ruby_libgearman_la_CPPFLAGS=  ${AM_CPPFLAGS} ${RUBY_INCLUDES}
+  ruby_libgearman_la_CFLAGS=
+  ruby_libgearman_la_SOURCES= ruby/libgearman.c
+  ruby_libgearman_la_LDFLAGS = -avoid-version -module ${RUBY_LDFLAGS}
+
+endif
+
+ruby/libgearman.c: interface/ruby/libgearman.i
+	${SWIG} -ruby -o $@ $<
 
 
 # perllocal.pod gets appended to, so we never want to delete it for real.
@@ -41,11 +67,4 @@ distclean-local:
 
 test: check
 
-python/gearman/_libgearman.so: python/libgearman.c
-	@cd python ;python setup.py build_ext --inplace
-
-python/libgearman.c: interface/python/libgearman.i
-	@test ! -d $(builddir)/python/gearman && cp -a $(srcdir)/python/gearman $(builddir)/python || true
-
-	${SWIG} -python -O -outdir ${builddir}/python/gearman -o $@ $<
 

@@ -33,4 +33,5 @@ AC_DEFUN([WITH_PYTHON], [
     AC_PYTHON_DEVEL()
     AS_IF([test "x$pythonexists" = "xno"],[with_python="no"])
   ])
+  AM_CONDITIONAL(BUILD_PYTHON, [test "$with_python" = "yes"])
 ])

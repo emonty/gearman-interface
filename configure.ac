@@ -52,7 +52,8 @@ then
   AC_MSG_ERROR(could not find libgearman)
 fi
 
-WITH_PYTHON()
+WITH_PYTHON
+WITH_RUBY
 
 dnl Have to hard-code /usr/local into the path. I hate this.
 SWIG="$SWIG \${DEFS} -I/usr/local/include -I/usr/include -I\${top_srcdir} -I\${top_builddir} \${DRIZZLE_CFLAGS}"
@@ -158,14 +159,12 @@ then
   # aliasing on, gcc will produce assembler that does not perform this
   # assignment. 
   AM_CFLAGS="${GCC_OPT} -fno-strict-aliasing -ggdb3 ${GCC_WARNINGS} ${PTHREAD_CFLAGS}"
-  AM_CPPFLAGS="${GCC_OPT} -fno-strict-aliasing -ggdb3 ${GXX_WARNINGS} ${PTHREAD_CFLAGS}"
+  AM_CXXFLAGS="${GCC_OPT} -fno-strict-aliasing -ggdb3 ${GXX_WARNINGS} ${PTHREAD_CFLAGS}"
 
 fi
 
 AC_SUBST(AM_CPPFLAGS)
 AC_SUBST(AM_CFLAGS)
-
-AM_CONDITIONAL(BUILD_PYTHON_SUBDIR, test "$with_python" = "yes")
 
 AC_SUBST(SWIG_DIR)
 AC_SUBST(PERL)

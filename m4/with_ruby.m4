@@ -84,4 +84,5 @@ AC_DEFUN([WITH_RUBY], [
   AC_SUBST(RUBY_ARCH_DIR)
 
   AS_IF([test "x$RUBY_DIR" = "x"],[with_ruby="no"])
+  AM_CONDITIONAL(BUILD_RUBY, test "$with_ruby" = "yes")
 ])
