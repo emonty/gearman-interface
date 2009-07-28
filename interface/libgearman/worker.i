@@ -72,7 +72,7 @@ typedef struct gearman_worker_st {} Worker;
     return gearman_worker_register($self, function_name, timeout);
   }
 
-  gearman_return_t unregisterFunction(const char *function_name) {
+  gearman_return_t unregister(const char *function_name) {
     return gearman_worker_unregister($self, function_name);
   }
 

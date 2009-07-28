@@ -71,10 +71,10 @@ typedef struct gearman_client_st {} Client;
   /**
    * @TODO Handle errors
    */
-  void *doJob(const char *function_name,
-              const void *workload, size_t workload_size,
-              size_t *result_size,
-              const char *unique= NULL)
+  void *do(const char *function_name,
+           const void *workload, size_t workload_size,
+           size_t *result_size,
+           const char *unique= NULL)
   {
     gearman_return_t ret;
     void *results= gearman_client_do($self, function_name, unique, workload,

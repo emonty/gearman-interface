@@ -33,9 +33,7 @@
 
 %pythoncode %{
 
-Client.do = new_instancemethod(_libgearman.Client_doJob,None,Client)
 Worker.register = new_instancemethod(_libgearman.Worker_registerFunction,None,Worker)
-Worker.unregister = new_instancemethod(_libgearman.Worker_unregisterFunction,None,Worker)
 
 %}
 
