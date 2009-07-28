@@ -21,5 +21,5 @@
 from gearman import libgearman
 client = libgearman.Client()
 client.addServer('localhost')
-print client.doJob('worker_func', 'Hello World!')
+print client.do('worker_func', 'Hello World!')
 
