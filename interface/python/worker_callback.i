@@ -68,9 +68,11 @@
     if (PyString_Check(result)) {
       py_result_str= PyString_AsString(result);
       *result_size= (size_t)PyString_Size(result);
+#if PY_VERSION_HEX >= 0x02060000
     } else if (PyByteArray_Check(result)) {
       py_result_str= PyByteArray_AsString(result);
       *result_size= (size_t)PyByteArray_Size(result);
+#endif
     } else if (PyBuffer_Check(result)) {
       if (result == job_obj)
       {
