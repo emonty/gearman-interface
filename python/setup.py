@@ -33,14 +33,14 @@ description = """Python wrapper of libgearman"""
 
 classifiers="""\
 Development Status :: 2 - Pre-Alpha
-License :: OSI Approved :: BSD
+License :: OSI Approved :: BSD License
 Operating System :: POSIX :: Linux
 Programming Language :: C++
 Programming Language :: Python
 Topic :: Software Development :: Libraries :: Python Modules
 """
 
-setup(name="python-gearman",
+setup(name="python-libgearman",
       version=version,
       description=description,
       long_description=description,
