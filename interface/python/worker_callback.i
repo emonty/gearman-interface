@@ -47,8 +47,8 @@
   {
     gearman_callback *cb= (gearman_callback *)fn_arg;
     PyObject *func = cb->callback_obj;   // Get Python callable
-    PyObject *job_obj = PyBuffer_FromMemory((void *)gearman_job_workload(job),
-                                            gearman_job_workload_size(job));
+    PyObject *job_obj = SWIG_NewPointerObj(SWIG_as_voidptr(job),
+                                           SWIGTYPE_p_gearman_job_st, 0 |  0 );
 
     PyObject *arglist = Py_BuildValue("(O)", job_obj);
 
@@ -74,14 +74,9 @@
       *result_size= (size_t)PyByteArray_Size(result);
 #endif
     } else if (PyBuffer_Check(result)) {
-      if (result == job_obj)
-      {
-        py_result_str= (char *)gearman_job_workload(job);
-        *result_size= gearman_job_workload_size(job);
-      } else {
-        printf("error!\n");
-        return NULL;
-      }
+      /* TODO: What if we get passed a buffer that isn't the buffer we passed?*/
+      py_result_str= (char *)gearman_job_workload(job);
+      *result_size= gearman_job_workload_size(job);
     } else {
       printf("error\n");
       return NULL;

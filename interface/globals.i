@@ -39,6 +39,11 @@ typedef enum enum_gearman_exception {
   GearmanException
 } gearman_exception;
 
+typedef struct gearman_workload_st {
+  const void *workload;
+  size_t workload_size;
+} gearman_workload;
+
 %}
 
 %typedef struct gearman_client_st Client;

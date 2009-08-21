@@ -26,10 +26,12 @@
 
 %include "interface/python/worker_callback.i"
 %include "interface/python/do_return.i"
+%include "interface/python/gearman_workload.i"
 
 %include "interface/libgearman/gearman.i"
 %include "interface/libgearman/client.i"
 %include "interface/libgearman/worker.i"
+%include "interface/libgearman/job.i"
 
 %pythoncode %{
 

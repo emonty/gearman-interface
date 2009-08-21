@@ -20,10 +20,12 @@
 
 from gearman import libgearman
 
-def worker_func(payload):
+def worker_func(job):
   """ nothing """ 
-  print "worker_func called"
-  return payload
+  print "%s{%s} called" % (job.functionName(), job.getUniqueID())
+  workload= job.getWorkload()
+  print workload
+  return workload
 
 worker = libgearman.Worker()
 worker.addServer('localhost')
