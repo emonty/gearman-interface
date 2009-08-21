@@ -24,10 +24,14 @@ EXTRA_DIST= $(srcdir)/interface/globals.i \
     ${srcdir}/autogen.sh
 CLEANFILES=
 DISTCLEANFILES=
+# Trick automake into making depdirs in the right places.
+EXTRA_LTLIBRARIES= libswig.la
+libswig_la_SOURCES=
 SUBDIRS=
 
 if BUILD_PYTHON
-  BUILT_SOURCES += python/libgearman.c python/gearman/_libgearman.so
+  libswig_la_SOURCES+= python/libgearman.i python/libgearman.c
+  BUILT_SOURCES += python/libgearman.c
   CLEANFILES += python/libgearman.c python/gearman/libgearman.py python/gearman/_libgearman.so python/gearman/*pyc
   DISTCLEANFILES += python/gearman/librelease.py
 endif
@@ -38,7 +42,8 @@ python/gearman/_libgearman.so: python/libgearman.c
 python/libgearman.c: interface/python/libgearman.i
 	@test ! -d $(builddir)/python/gearman && cp -a $(srcdir)/python/gearman $(builddir)/python || true
 
-	${SWIG} -python -O -outdir ${builddir}/python/gearman -o $@ $<
+	${SWIG} -python -O -outdir ${builddir}/python/gearman -MD -MF python/$(DEPDIR)/libgearman.Tpo -o $@ $<
+	@mv -f python/$(DEPDIR)/libgearman.Tpo python/$(DEPDIR)/libgearman.Plo
 
 rubydir= ${RUBY_DIR}
 ruby_LTLIBRARIES=
