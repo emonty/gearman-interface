@@ -19,18 +19,35 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+%typemap(arginit) (const void *workload, size_t workload_size) %{
+  PyObject *save_obj= NULL;
+%}
+
 %typemap(in) (const void *workload, size_t workload_size) {
     
-    char *cstr;
+    char *cstr= NULL;
     Py_ssize_t len;
+    $2= 0;
 
-    $input = PyUnicode_AsUTF8String($input);
-    PyBytes_AsStringAndSize($input, &cstr, &len);
-    
-    $2 = len;
-    $1 = (char *) malloc($2);
-    memcpy($1, cstr, $2);
+    if (PyUnicode_Check($input)) {
+      save_obj = PyUnicode_AsUTF8String($input);
+      PyBytes_AsStringAndSize(save_obj, &cstr, &len);
+    } else if (PyBytes_Check($input)) {
+      PyBytes_AsStringAndSize($input, &cstr, &len);
+    } else if (PyByteArray_Check($input)) {
+      cstr= PyByteArray_AsString($input);
+      len= PyByteArray_Size($input);
+    }
+
+    $2 = (size_t)len;
+    $1 = (void *)cstr;
 }
+
+%typemap(freearg) (const void *workload, size_t workload_size) %{
+  if (save_obj != NULL) {
+    Py_XDECREF(save_obj);
+  }
+%}
 
 %typemap(in, numinputs=0) size_t *result_size (size_t rsize) {
   $1= &rsize;
