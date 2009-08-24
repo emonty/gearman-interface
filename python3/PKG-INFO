@@ -1,0 +1,16 @@
+Metadata-Version: 1.0
+Name: python-drizzle
+Version: 0.1
+Summary: Python wrapper of libdrizzle
+Home-page: UNKNOWN
+Author: Monty Taylor
+Author-email: mordred@inaugust.com
+License: GPL
+Description: Python wrapper of libdrizzle
+Platform: linux
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: License :: OSI Approved :: GPL
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: C++
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

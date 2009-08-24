@@ -33,17 +33,33 @@ if BUILD_PYTHON
   libswig_la_SOURCES+= python/libgearman.i python/libgearman.c
   BUILT_SOURCES += python/libgearman.c
   CLEANFILES += python/libgearman.c python/gearman/libgearman.py python/gearman/_libgearman.so python/gearman/*pyc
-  DISTCLEANFILES += python/gearman/librelease.py
+  DISTCLEANFILES += python/gearman/release.py
 endif
 
 python/gearman/_libgearman.so: python/libgearman.c
-	@cd python ;python setup.py build_ext --inplace
+	@cd python ;${PYTHON} setup.py build_ext --inplace
 
 python/libgearman.c: interface/python/libgearman.i
 	@test ! -d $(builddir)/python/gearman && cp -a $(srcdir)/python/gearman $(builddir)/python || true
 
 	${SWIG} -python -O -outdir ${builddir}/python/gearman -MD -MF python/$(DEPDIR)/libgearman.Tpo -o $@ $<
 	@mv -f python/$(DEPDIR)/libgearman.Tpo python/$(DEPDIR)/libgearman.Plo
+
+if BUILD_PYTHON
+  libswig_la_SOURCES+= python3/libgearman.i python3/libgearman.c
+  BUILT_SOURCES += python3/libgearman.c python3/gearman/_libgearman.so
+  CLEANFILES += python3/libgearman.c python3/gearman/libgearman.py python3/gearman/_libgearman.so python3/gearman/*pyc
+  DISTCLEANFILES += python3/gearman/release.py
+endif
+
+python3/gearman/_libgearman.so: python3/libgearman.c
+	@cd python3 ;${PYTHON3} setup.py build_ext --inplace
+
+python3/libgearman.c: interface/python3/libgearman.i
+	@test ! -d $(builddir)/python3/gearman && cp -a $(srcdir)/python3/gearman $(builddir)/python3 || true
+
+	${SWIG} -python -py3 -O -outdir ${builddir}/python3/gearman -MD -MF python3/$(DEPDIR)/libgearman.Tpo -o $@ $<
+	@mv -f python3/$(DEPDIR)/libgearman.Tpo python3/$(DEPDIR)/libgearman.Plo
 
 rubydir= ${RUBY_DIR}
 ruby_LTLIBRARIES=

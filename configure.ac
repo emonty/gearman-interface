@@ -28,11 +28,17 @@ PANDORA_CANONICAL_TARGET
 PANDORA_REQUIRE_LIBGEARMAN
 
 PANDORA_SWIG
+PANDORA_SWIG_PYTHON3
 
 PANDORA_WITH_PYTHON
 PANDORA_WITH_RUBY
+PANDORA_WITH_PYTHON3
 
 
-AC_CONFIG_FILES([Makefile python/gearman/release.py ])
+AC_CONFIG_FILES([\
+  Makefile \
+  python/gearman/release.py \
+  python3/gearman/release.py \
+])
 AC_OUTPUT
 
