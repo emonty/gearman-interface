@@ -16,7 +16,7 @@
 #  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 AC_PREREQ(2.59)
-AC_INIT([gearman-interface],[0.0.2],[https://launchpad.net/gearman-interface])
+AC_INIT([gearman-interface],[0.0.3],[https://launchpad.net/gearman-interface])
 AC_CONFIG_SRCDIR(interface/globals.i)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_HEADERS([config.h])
