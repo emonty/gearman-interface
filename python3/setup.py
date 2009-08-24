@@ -27,17 +27,17 @@ import sys
 
 description = """Python3 wrapper of libgearman"""
 
-classifiers="""\
-Development Status :: 3 - Alpha
-Intended Audience :: Developers
-License :: OSI Approved :: BSD License
-Operating System :: POSIX :: Linux
-Operating System :: POSIX :: SunOS/Solaris
-Operating System :: MacOS :: MacOS X
-Programming Language :: C
-Programming Language :: Python
-Topic :: Software Development :: Libraries :: Python Modules
-"""
+classifiers=[
+"Development Status :: 3 - Alpha", 
+"Intended Audience :: Developers", 
+"License :: OSI Approved :: BSD License", 
+"Operating System :: POSIX :: Linux", 
+"Operating System :: POSIX :: SunOS/Solaris", 
+"Operating System :: MacOS :: MacOS X", 
+"Programming Language :: C", 
+"Programming Language :: Python", 
+"Topic :: Software Development :: Libraries :: Python Modules", 
+]
 
 setup(name="python3-libgearman",
       version=version,
@@ -48,7 +48,7 @@ setup(name="python3-libgearman",
       url="http://launchpad.net/gearman-interface",
       platforms="linux",
       license="BSD",
-      classifiers=filter(None, classifiers.splitlines()),
+      classifiers=classifiers,
 
       ext_modules=[
         Extension("gearman._libgearman",
