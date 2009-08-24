@@ -113,4 +113,13 @@ typedef struct gearman_client_st {} Client;
     return results;
   }
 
+  const char *jobHandle() {
+    return gearman_client_do_job_handle($self);
+  }
+
+  void status(uint32_t *numerator, uint32_t *denominator) {
+    gearman_client_do_status($self, numerator, denominator);
+  }
+
+
 };
