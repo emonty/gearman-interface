@@ -59,9 +59,24 @@ typedef struct gearman_st {} Gearman;
     return gearman_errno($self);
   }
 
-  void setOptions(gearman_options_t options, uint32_t data)
+  gearman_options_t options()
   {
-    gearman_set_options($self, options, data);
+    return gearman_options($self);
+  }
+
+  void setOptions(gearman_options_t options)
+  {
+    gearman_set_options($self, options);
+  }
+
+  void addOptions(gearman_options_t options)
+  {
+    gearman_add_options($self, options);
+  }
+
+  void removeOptions(gearman_options_t options)
+  {
+    gearman_remove_options($self, options);
   }
 
   /**
