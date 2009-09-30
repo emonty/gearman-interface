@@ -43,8 +43,20 @@ typedef struct gearman_client_st {} Client;
     return gearman_client_errno($self);
   }
 
-  void setOptions(gearman_client_options_t options, uint32_t data) {
-    return gearman_client_set_options($self, options, data);
+  gearman_client_options_t options() {
+    return gearman_client_options($self);
+  }
+  
+  void setOptions(gearman_client_options_t options) {
+    gearman_client_set_options($self, options);
+  }
+  
+  void addOptions(gearman_client_options_t options) {
+    gearman_client_add_options($self, options);
+  }
+  
+  void removeOptions(gearman_client_options_t options) {
+    gearman_client_remove_options($self, options);
   }
   
   gearman_return_t addServer(const char *host, in_port_t port) {
@@ -67,6 +79,9 @@ typedef struct gearman_client_st {} Client;
     return gearman_client_add_servers($self, servers);
   }
 
+  void removeServers() {
+    gearman_client_remove_servers($self);
+  }
 
   /**
    * @TODO Handle errors

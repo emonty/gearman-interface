@@ -63,24 +63,11 @@ typedef struct gearman_workload_st {
 %ignore gearman_event_watch_fn;
 %ignore gearman_malloc_fn;
 %ignore gearman_free_fn;
-%ignore gearman_task_fn_arg_free_fn;
+%ignore gearman_task_context_free_fn;
 %ignore gearman_log_fn;
-%ignore gearman_server_log_fn;
-%ignore gearman_server_thread_log_fn;
-%ignore gearmand_log_fn;
-%ignore gearman_server_thread_run_fn;
-%ignore gearman_con_add_fn;
-%ignore gearman_con_recv_fn;
-%ignore gearman_con_protocol_data_free_fn;
-%ignore gearman_con_recv_data_fn;
-%ignore gearman_con_send_fn;
-%ignore gearman_con_send_data_fn;
+%ignore gearman_con_protocol_context_free_fn;
 %ignore gearman_packet_pack_fn;
 %ignore gearman_packet_unpack_fn;
-%ignore gearman_queue_add_fn;
-%ignore gearman_queue_flush_fn;
-%ignore gearman_queue_done_fn;
-%ignore gearman_queue_replay_fn;
 
 %include <libgearman/constants.h>
 

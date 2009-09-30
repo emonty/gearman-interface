@@ -23,12 +23,12 @@ typedef struct gearman_job_st {} Job;
 
 %extend Job {
 
-  gearman_return_t status(uint32_t numerator, uint32_t denominator) {
-    return gearman_job_status($self, numerator, denominator);
+  gearman_return_t sendStatus(uint32_t numerator, uint32_t denominator) {
+    return gearman_job_send_status($self, numerator, denominator);
   }
 
-  gearman_return_t fail() {
-    return gearman_job_fail($self);
+  gearman_return_t sendFail() {
+    return gearman_job_send_fail($self);
   }
 
   /**
