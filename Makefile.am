@@ -27,7 +27,6 @@ DISTCLEANFILES=
 # Trick automake into making depdirs in the right places.
 EXTRA_LTLIBRARIES= libswig.la
 libswig_la_SOURCES=
-SUBDIRS=
 
 if BUILD_PYTHON
   libswig_la_SOURCES+= python/libgearman.i python/libgearman.c
@@ -61,23 +60,18 @@ python3/libgearman.c: interface/python3/libgearman.i
 	${SWIG} -python -py3 -O -outdir ${builddir}/python3/gearman -MD -MF python3/$(DEPDIR)/libgearman.Tpo -o $@ $<
 	@mv -f python3/$(DEPDIR)/libgearman.Tpo python3/$(DEPDIR)/libgearman.Plo
 
-rubydir= ${RUBY_DIR}
-ruby_LTLIBRARIES=
 if BUILD_RUBY
-  BUILT_SOURCES += ruby/libgearman.c
-  EXTRA_DIST += ruby/libgearman.c
-  CLEANFILES += ruby/libgearman.c
-  ruby_LTLIBRARIES += ruby/libgearman.la
-
-  ruby_libgearman_la_CPPFLAGS=  ${AM_CPPFLAGS} ${RUBY_INCLUDES}
-  ruby_libgearman_la_CFLAGS=
-  ruby_libgearman_la_SOURCES= ruby/libgearman.c
-  ruby_libgearman_la_LDFLAGS= -avoid-version -module ${RUBY_LDFLAGS}
-
+  libswig_la_SOURCES+= interface/ruby/libgearman.i
+  BUILT_SOURCES += ruby/ext/gearman.c ruby/ext/gearman.so
+  CLEANFILES += ruby/*.db ruby/core* ruby/ext/gearman.c ruby/ext/gearman.so
 endif
 
-ruby/libgearman.c: interface/ruby/libgearman.i
-	${SWIG} -ruby -o $@ $<
+ruby/ext/gearman.so:
+	cp ${top_srcdir}/ChangeLog ${top_builddir}/ruby/CHANGELOG
+	@cd ruby && rake manifest && rake compile
+
+ruby/ext/gearman.c: interface/ruby/libgearman.i
+	$(SWIG) -ruby -autorename -o $@ $<
 
 
 distclean-local:

@@ -1,0 +1,18 @@
+These are the ruby wrappers for libgearman which can be used to connect
+to Gearman.
+
+The C source here is generated from SWIG. That, as well as the larger build
+process of which it is a part and from which this source package is derived 
+can be checked out from launchpad via:
+
+bzr branch lp:gearman-interface
+
+If you just want to build/install this without doing developement on the C code,
+then this source dir is all you need. If you want to develop on the C bindings
+themselves, then you'll need the full gearman-interface source tree.
+
+You will need to install echoe from gem:
+
+  gem install echoe
+
+From that point, rake compile should do the trick.

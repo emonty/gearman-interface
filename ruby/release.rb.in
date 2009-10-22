@@ -1,0 +1,5 @@
+class LibgearmanRelease
+  def self.version
+    return "@VERSION@"
+  end
+end
