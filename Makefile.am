@@ -30,9 +30,10 @@ ACLOCAL_AMFLAGS = -I m4
 BUILT_SOURCES= libgearman.xml
 EXTRA_DIST= $(srcdir)/interface/globals.i \
     ${srcdir}/interface/libgearman/*.i \
-    ${srcdir}/interface/ruby/*.i \
+    ${srcdir}/interface/lua/*.i \
     ${srcdir}/interface/python/*.i \
     ${srcdir}/interface/python3/*.i \
+    ${srcdir}/interface/ruby/*.i \
     ${srcdir}/interface/xml/*.i \
     ${srcdir}/autogen.sh
 CLEANFILES= libmemcached.xml
@@ -41,11 +42,28 @@ DISTCLEANFILES=
 EXTRA_LTLIBRARIES= libswig.la
 libswig_la_SOURCES= interface/xml/libgearman.i
 
-
 libgearman.xml: interface/xml/libgearman.i
 	$(MKDIR_P) $(DEPDIR)
 	$(SWIG) $(SWIG_OPTS) -xml -MD -MF ${DEPDIR}/$*.Tpo -o $@ $<
 	@mv -f $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+
+luaarchdir=${LUA_ARCHDIR}
+luaarch_LTLIBRARIES=
+if BUILD_LUA
+  libswig_la_SOURCES+= interface/lua/libgearman.i
+  BUILT_SOURCES+= lua/libgearman.c
+  luaarch_LTLIBRARIES+= lua/gearman/libgearman.la
+  CLEANFILES+=lua/*.db lua/test-out.rdf lua/core* lua/libgearman.c lua/gearman/libgearman.so
+
+  lua_gearman_libgearman_la_SOURCES= lua/libgearman.c
+  lua_gearman_libgearman_la_CFLAGS= ${LUA_CFLAGS}
+  lua_gearman_libgearman_la_LIBADD= ${LTMEMCACHED} ${LUA_LDFLAGS}
+  lua_gearman_libgearman_la_LDFLAGS= -module -avoid-version
+endif
+lua/libgearman.c: interface/lua/libgearman.i
+	$(MKDIR_P) lua/$(DEPDIR)
+	$(SWIG) -lua -MD -MF lua/$(DEPDIR)/$(@F).Tpo -o $@ $<
+	@mv -f lua/$(DEPDIR)/$(@F).Tpo lua/$(DEPDIR)/$(@F).Plo
 
 if BUILD_PYTHON
   libswig_la_SOURCES+= interface/python/libgearman.i python/libgearman.c
@@ -58,6 +76,7 @@ python/gearman/_libgearman.so: python/libgearman.c
 	@cd python ;${PYTHON} setup.py build_ext --inplace
 
 python/libgearman.c: interface/python/libgearman.i
+	$(MKDIR_P) python/$(DEPDIR)
 	@test ! -d $(builddir)/python/gearman && cp -a $(srcdir)/python/gearman $(builddir)/python || true
 
 	${SWIG} -python -O -outdir ${builddir}/python/gearman -MD -MF python/$(DEPDIR)/libgearman.Tpo -o $@ $<
@@ -74,6 +93,7 @@ python3/gearman/_libgearman.so: python3/libgearman.c
 	@cd python3 ;${PYTHON3} setup.py build_ext --inplace
 
 python3/libgearman.c: interface/python/libgearman.i
+	$(MKDIR_P) python3/$(DEPDIR)
 	@test ! -d $(builddir)/python3/gearman && cp -a $(srcdir)/python3/gearman $(builddir)/python3 || true
 
 	${SWIG} -python -py3 -O -outdir ${builddir}/python3/gearman -MD -MF python3/$(DEPDIR)/libgearman.Tpo -o $@ $<
@@ -90,6 +110,7 @@ ruby/ext/gearman.so:
 	@cd ruby && rake manifest && rake compile
 
 ruby/ext/gearman.c: interface/ruby/libgearman.i
+	$(MKDIR_P) ruby/$(DEPDIR)
 	$(SWIG) -ruby -autorename -o $@ $<
 
 
