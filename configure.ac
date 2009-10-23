@@ -26,7 +26,7 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 AC_PREREQ(2.59)
-AC_INIT([gearman-interface],[0.10.1],[https://launchpad.net/gearman-interface])
+AC_INIT([gearman-interface],[0.10.2],[https://launchpad.net/gearman-interface])
 AC_CONFIG_SRCDIR(interface/globals.i)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_HEADERS([config.h])
