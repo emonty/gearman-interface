@@ -117,8 +117,8 @@ typedef struct gearman_worker_st {} Worker;
     return gearman_worker_grab_job($self, NULL, &ret);
   }
 
-  gearman_return_t addFunction(const char *function_name, uint32_t timeout,
-                             gearman_callback *worker_fn)
+  gearman_return_t addFunction(const char *function_name,
+                               gearman_callback *worker_fn, uint32_t timeout= 0)
   {
     return gearman_worker_add_function($self, function_name, timeout,
                                        workerCallback, (void *)worker_fn);

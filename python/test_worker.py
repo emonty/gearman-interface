@@ -28,7 +28,11 @@ def worker_func(job):
   return workload
 
 worker = libgearman.Worker()
+worker.setTimeout(5000)
 worker.addServer('localhost')
-worker.addFunction("worker_func", 32, worker_func)
-while True:
-  worker.work() 
+worker.addFunction("worker_func", worker_func)
+ret= libgearman.GEARMAN_SUCCESS
+while ret == libgearman.GEARMAN_SUCCESS or ret == libgearman.GEARMAN_TIMEOUT:
+  ret= worker.work() 
+  if ret == libgearman.GEARMAN_TIMEOUT:
+    print "Hit timeout - restarting"

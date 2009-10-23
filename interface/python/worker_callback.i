@@ -55,8 +55,10 @@
 
     char *py_result_str= NULL;
 
-    int alloc= 0;
+    int alloc= SWIG_NEWOBJ;
     int res= SWIG_AsCharPtrAndSize(result, &py_result_str, result_size, &alloc);
+    /* SWIG_AsCharPtrAndSize adds one to the size - I'm not sure why */
+    *result_size-= 1;
     if (res<0)
     { 
       return NULL;

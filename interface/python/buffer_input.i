@@ -31,7 +31,7 @@
 
 %define %buffer_input(TYPEMAP, SIZE)
 %typemap(in, numinputs=1) (TYPEMAP, SIZE)
-  (int res, Py_ssize_t size= 0, const void *buf= NULL)
+  (int res, Py_ssize_t size= 0, const void *buf= NULL, int did_alloc= 0)
 %{
   res = PyObject_AsReadBuffer($input, &buf, &size);
   if (res==0)
@@ -42,9 +42,10 @@
   else
   {
     PyErr_Clear();
-    int alloc= 0;
+    int alloc= SWIG_NEWOBJ;
     res= SWIG_AsCharPtrAndSize($input, (char **)&$1, &$2, &alloc);
-    $2= strlen($1);
+    /* SWIG_AsCharPtrAndSize adds one to the size - I'm not sure why */
+    $2-= 1;
     if (res<0)
     { 
       PyErr_Clear();
@@ -52,5 +53,11 @@
     }
   }
 
+%}
+
+%typemap(freearg) (TYPEMAP, SIZE)
+%{
+  if (did_alloc$argnum == 1)
+    free($1);
 %}
 %enddef

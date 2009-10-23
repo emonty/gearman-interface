@@ -29,7 +29,8 @@ def worker_func(job):
   return workload
 
 worker = libgearman.Worker()
+worker.addTimeout(5000)
 worker.addServer('localhost')
-worker.addFunction("worker_func", 32, worker_func)
+worker.addFunction("worker_func", worker_func)
 while True:
   worker.work() 
