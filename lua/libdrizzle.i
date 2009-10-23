@@ -1,8 +1,8 @@
 /* -*- mode: c++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
  *  vim:expandtab:shiftwidth=2:tabstop=2:smarttab:
  *
- *  ndb-bindings: Bindings for the NDB API
- *  Copyright (C) 2008 MySQL
+ *  gearman-interface: Interface Wrappers for Gearman
+ *  Copyright (C) 2008 Sun Microsystems, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,24 +23,10 @@
 
 %include "interface/globals.i"
 
-%include "interface/libdrizzle/drizzle.i"
-%include "interface/libdrizzle/con.i"
-%include "interface/libdrizzle/client.i"
-%include "interface/libdrizzle/server.i"
-%include "interface/libdrizzle/query.i"
-%include "interface/libdrizzle/result.i"
-%include "interface/libdrizzle/result_client.i"
-%include "interface/libdrizzle/result_client_buffered.i"
-%include "interface/libdrizzle/result_client_unbuffered.i"
-%include "interface/libdrizzle/result_server.i"
-%include "interface/libdrizzle/column.i"
-%include "interface/libdrizzle/column_server.i"
-
-
 
 %{
 
-#define D_exception(code,msg) do { SWIG_fail; } while(0);
-#define D_exception_err(code,err) do { SWIG_fail; } while(0);
+#define PANDORA_exception(code,msg) do { SWIG_fail; } while(0);
+#define PANDORA_exception_err(code,err) do { SWIG_fail; } while(0);
 
 %}
