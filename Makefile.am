@@ -27,16 +27,25 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ACLOCAL_AMFLAGS = -I m4
-BUILT_SOURCES=
+BUILT_SOURCES= libgearman.xml
 EXTRA_DIST= $(srcdir)/interface/globals.i \
     ${srcdir}/interface/libgearman/*.i \
+    ${srcdir}/interface/ruby/*.i \
     ${srcdir}/interface/python/*.i \
+    ${srcdir}/interface/python3/*.i \
+    ${srcdir}/interface/xml/*.i \
     ${srcdir}/autogen.sh
-CLEANFILES=
+CLEANFILES= libmemcached.xml
 DISTCLEANFILES=
 # Trick automake into making depdirs in the right places.
 EXTRA_LTLIBRARIES= libswig.la
-libswig_la_SOURCES=
+libswig_la_SOURCES= interface/xml/libgearman.i
+
+
+libgearman.xml: interface/xml/libgearman.i
+	$(MKDIR_P) $(DEPDIR)
+	$(SWIG) $(SWIG_OPTS) -xml -MD -MF ${DEPDIR}/$*.Tpo -o $@ $<
+	@mv -f $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
 
 if BUILD_PYTHON
   libswig_la_SOURCES+= interface/python/libgearman.i python/libgearman.c
