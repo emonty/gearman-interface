@@ -36,6 +36,8 @@
 %include "exception.i"
 %include "stdint.i"
 
+%feature("autodoc", "1");
+
 %{
 #include <libgearman/gearman.h>
 
