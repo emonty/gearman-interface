@@ -83,49 +83,42 @@ typedef struct gearman_client_st {} Client;
     gearman_client_remove_servers($self);
   }
 
-  /**
-   * @TODO Handle errors
-   */
-  void *do(const char *function_name,
-           const void *workload, size_t workload_size,
-           size_t *result_size,
-           const char *unique= NULL)
+  gearman_return_t do(const char *function_name,
+                      const void *workload, size_t workload_size,
+                      char **ret_val, size_t *ret_size,
+                      const char *unique= NULL)
   {
     gearman_return_t ret;
-    void *results= gearman_client_do($self, function_name, unique, workload,
-                                     workload_size, result_size, &ret);
+    *ret_val= (void *)gearman_client_do($self, function_name, unique, workload,
+                                        workload_size, ret_size, &ret);
 
-    return results;
+    return ret;
   }
 
-  /**
-   * @TODO Handle errors
-   */
-  void *doHigh(const char *function_name,
-               const void *workload, size_t workload_size,
-               size_t *result_size,
-               const char *unique= NULL)
+  gearman_return_t doHigh(const char *function_name,
+                          const void *workload, size_t workload_size,
+                          char **ret_val, size_t *ret_size,
+                          const char *unique= NULL)
   {
     gearman_return_t ret;
-    void *results= gearman_client_do_high($self, function_name, unique, workload,
-                                          workload_size, result_size, &ret);
+    *ret_val= (void *)gearman_client_do_high($self, function_name, unique,
+                                             workload, workload_size,
+                                             ret_size, &ret);
 
-    return results;
+    return ret;
   }
 
-  /**
-   * @TODO Handle errors
-   */
-  void *doLow(const char *function_name,
-              const void *workload, size_t workload_size,
-              size_t *result_size,
-              const char *unique= NULL)
+  gearman_return_t doLow(const char *function_name,
+                         const void *workload, size_t workload_size,
+                         char **ret_val, size_t *ret_size,
+                         const char *unique= NULL)
   {
     gearman_return_t ret;
-    void *results= gearman_client_do_low($self, function_name, unique, workload,
-                                         workload_size, result_size, &ret);
+    *ret_val= (void *)gearman_client_do_low($self, function_name, unique,
+                                            workload, workload_size,
+                                            ret_size, &ret);
 
-    return results;
+    return ret;
   }
 
   const char *jobHandle() {

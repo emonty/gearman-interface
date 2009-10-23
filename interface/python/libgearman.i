@@ -24,14 +24,18 @@
 
 %include "interface/globals.i"
 
-%include "interface/python/worker_callback.i"
-%include "interface/python/do_return.i"
 %include "interface/python/gearman_workload.i"
+%include "interface/python/buffer_input.i"
+%include "interface/python/value_return.i"
+%include "interface/python/worker_callback.i"
+
+%buffer_input(const void *workload, size_t workload_size)
 
 %include "interface/libgearman/gearman.i"
 %include "interface/libgearman/client.i"
 %include "interface/libgearman/worker.i"
 %include "interface/libgearman/job.i"
+
 
 %pythoncode %{
 

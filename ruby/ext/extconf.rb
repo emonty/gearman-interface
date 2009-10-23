@@ -12,9 +12,9 @@ else
   $CPPFLAGS << "-O4"
 end
 
-if have_header('libmemcached/memcached.h')
-  if have_library('memcached','memcached_version')
-    create_makefile 'memcached'
+if have_header('libgearman/gearman.h')
+  if have_library('gearman','gearman_version')
+    create_makefile 'gearman'
   end
 end
 

@@ -79,6 +79,14 @@ typedef struct gearman_st {} Gearman;
     gearman_remove_options($self, options);
   }
 
+  int timeout() {
+    return gearman_timeout($self);
+  }
+
+  void setTimeout(int timeout) {
+    gearman_set_timeout($self, timeout);
+  }
+  
   /**
    * Set logging callback for gearman instance.
    * @param gearman Gearman instance structure previously initialized with

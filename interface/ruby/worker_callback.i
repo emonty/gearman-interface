@@ -41,7 +41,14 @@
   {
     gearman_callback *callback_data= (gearman_callback *)fn_arg;
     VALUE cb_obj = callback_data->callback_obj;
+    VALUE job_obj = SWIG_NewPointerObj(SWIG_as_voidptr(job),
+                                       SWIGTYPE_p_gearman_job_st, 0 | 0);
+
+    VALUE ret= rb_funcall(cb_obj,rb_intern("call"), 1, job_obj);
+    *result_size= (size_t)RSTRING(ret)->len;
+    return (void *)STR2CSTR(ret);
   }
+
 
 %}
 

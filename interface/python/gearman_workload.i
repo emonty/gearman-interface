@@ -19,6 +19,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-%typemap(out) gearman_workload {
-  $result = PyBuffer_FromMemory((void *)$1.workload, $1.workload_size);
+%typemap(out, fragment="SWIG_FromCharPtrAndSize") gearman_workload {
+  $result = SWIG_FromCharPtrAndSize($1.workload, $1.workload_size);
 }

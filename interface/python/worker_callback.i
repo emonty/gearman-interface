@@ -19,19 +19,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-%typemap(in) gearman_callback *worker_fn {
-
-  if (!PyCallable_Check($input)) {
-    PyErr_SetString(PyExc_TypeError, "Need a callable object!");
-    return NULL;
-  }
-  $1= (gearman_callback *)PyMem_Malloc(sizeof(gearman_callback));
-  $1->callback_obj= $input;
-  Py_INCREF($input);
-
-}
-
-
+%fragment("workerCallback","header",fragment="SWIG_AsCharPtrAndSize")
 %{
 
 /* TODO: I know this looks silly - it's cause we're going to add the job to it */
@@ -64,37 +52,36 @@
     }
 
     *ret_ptr= GEARMAN_SUCCESS;
+
     char *py_result_str= NULL;
-    if (PyString_Check(result)) {
-      py_result_str= PyString_AsString(result);
-      *result_size= (size_t)PyString_Size(result);
-#if PY_VERSION_HEX >= 0x02060000
-    } else if (PyByteArray_Check(result)) {
-      py_result_str= PyByteArray_AsString(result);
-      *result_size= (size_t)PyByteArray_Size(result);
-#endif
-    } else if (PyBuffer_Check(result)) {
-      /* TODO: What if we get passed a buffer that isn't the buffer we passed?*/
-      py_result_str= (char *)gearman_job_workload(job);
-      *result_size= gearman_job_workload_size(job);
-    } else {
-      printf("error\n");
+
+    int alloc= 0;
+    int res= SWIG_AsCharPtrAndSize(result, &py_result_str, result_size, &alloc);
+    if (res<0)
+    { 
       return NULL;
     }
-      
-  
-    /* TODO: Make this use PyMem_Malloc - talk to eric about
-     * how the malloc args work
-     */
-    void *result_bytes= malloc(*result_size+1); 
-    memcpy(result_bytes, py_result_str, *result_size);
+
 
     Py_DECREF(result);
     Py_DECREF(arglist);
 
-    return result_bytes;
+    return py_result_str;
     
   }
 
 %}
+
+%typemap(in, fragment="workerCallback") gearman_callback *worker_fn {
+
+  if (!PyCallable_Check($input)) {
+    PyErr_SetString(PyExc_TypeError, "Need a callable object!");
+    return NULL;
+  }
+  $1= (gearman_callback *)PyMem_Malloc(sizeof(gearman_callback));
+  $1->callback_obj= $input;
+  Py_INCREF($input);
+
+}
+
 

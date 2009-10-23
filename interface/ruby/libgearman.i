@@ -23,13 +23,14 @@
 
 %include "interface/globals.i"
 
-%typemap(in) (const char *query, size_t size) {
-
+%typemap(in) (const void *workload, size_t workload_size)
+{
   $1 = STR2CSTR($input);
   $2 = (size_t)RSTRING($input)->len;
- }
+}
 
 %include "interface/ruby/worker_callback.i"
+%include "interface/ruby/value_return.i"
 
 %include "interface/libgearman/gearman.i"
 %include "interface/libgearman/client.i"

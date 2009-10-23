@@ -59,6 +59,14 @@ typedef struct gearman_worker_st {} Worker;
   void removeOptions(gearman_worker_options_t options) {
     gearman_worker_remove_options($self, options);
   }
+
+  int timeout() {
+    return gearman_worker_timeout($self);
+  }
+
+  void setTimeout(int timeout) {
+    gearman_worker_set_timeout($self, timeout);
+  }
   
   gearman_return_t addServer(const char *host, in_port_t port) {
     return gearman_worker_add_server($self, host, port);
@@ -81,12 +89,14 @@ typedef struct gearman_worker_st {} Worker;
   }
 
   /**
-   * @TODO Uncomment this with gearmand 0.11, missing in 0.10
+   * @TODO Uncomment this in 0.11
+   *
   void removeServers() {
     gearman_worker_remove_servers($self);
   }
 */
 
+  
   gearman_return_t registerFunction(const char *function_name, uint32_t timeout) {
     return gearman_worker_register($self, function_name, timeout);
   }
