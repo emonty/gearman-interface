@@ -97,7 +97,8 @@ typedef struct gearman_worker_st {} Worker;
 */
 
   
-  gearman_return_t registerFunction(const char *function_name, uint32_t timeout) {
+  gearman_return_t registerFunction(const char *function_name,
+                                    uint32_t timeout= 0) {
     return gearman_worker_register($self, function_name, timeout);
   }
 

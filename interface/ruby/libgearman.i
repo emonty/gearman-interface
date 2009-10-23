@@ -19,7 +19,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-%module libgearman
+%module gearman
 
 %include "interface/globals.i"
 
@@ -28,6 +28,11 @@
   $1 = STR2CSTR($input);
   $2 = (size_t)RSTRING($input)->len;
 }
+
+
+%rename(Gearman) gearman_st;
+%rename(Client) gearman_client_st;
+%rename(Worker) gearman_worker_st;
 
 %include "interface/ruby/worker_callback.i"
 %include "interface/ruby/value_return.i"

@@ -22,25 +22,22 @@
 %fragment("workerCallback","header",fragment="SWIG_AsCharPtrAndSize")
 %{
 
-/* TODO: I know this looks silly - it's cause we're going to add the job to it */
-
-  typedef struct py_gearman_callback_st {
-    PyObject *callback_obj;
-  } gearman_callback;
+  typedef PyObject* gearman_callback;
 
 
   void* workerCallback(gearman_job_st *job, void *fn_arg,
                        size_t *result_size,
                        gearman_return_t *ret_ptr)
   {
-    gearman_callback *cb= (gearman_callback *)fn_arg;
-    PyObject *func = cb->callback_obj;   // Get Python callable
+    PyObject *func= (PyObject *)fn_arg;
     PyObject *job_obj = SWIG_NewPointerObj(SWIG_as_voidptr(job),
                                            SWIGTYPE_p_gearman_job_st, 0 |  0 );
 
     PyObject *arglist = Py_BuildValue("(O)", job_obj);
 
     PyObject *result= PyObject_CallObject(func, arglist);
+    Py_DECREF(job_obj);
+    Py_DECREF(arglist);
 
     PyObject *py_error= PyErr_Occurred();
     if (py_error != NULL)
@@ -48,6 +45,7 @@
       *ret_ptr= GEARMAN_WORK_EXCEPTION;
       *result_size= 0;
       PyErr_Clear();
+      Py_DECREF(result);
       return NULL;
     }
 
@@ -57,16 +55,13 @@
 
     int alloc= SWIG_NEWOBJ;
     int res= SWIG_AsCharPtrAndSize(result, &py_result_str, result_size, &alloc);
+    Py_DECREF(result);
     /* SWIG_AsCharPtrAndSize adds one to the size - I'm not sure why */
     *result_size-= 1;
     if (res<0)
     { 
       return NULL;
     }
-
-
-    Py_DECREF(result);
-    Py_DECREF(arglist);
 
     return py_result_str;
     
@@ -80,8 +75,7 @@
     PyErr_SetString(PyExc_TypeError, "Need a callable object!");
     return NULL;
   }
-  $1= (gearman_callback *)PyMem_Malloc(sizeof(gearman_callback));
-  $1->callback_obj= $input;
+  $1= (void *)$input;
   Py_INCREF($input);
 
 }
