@@ -33,63 +33,77 @@ typedef struct gearman_client_st {} Client;
 
 %extend Client {
 
-  Client() {
+  Client()
+  {
     return gearman_client_create(NULL);
   }
 
-  ~Client() {
+  ~Client()
+  {
     gearman_client_free($self);
   }
 
-  Client *copy() {
+  Client *copy()
+  {
     return gearman_client_clone(NULL, $self);
   }
 
-  const char *error() {
+  const char *error()
+  {
     return gearman_client_error($self);
   }
 
-  int errno() {
+  int errno()
+  {
     return gearman_client_errno($self);
   }
 
-  gearman_client_options_t options() {
+  gearman_client_options_t options()
+  {
     return gearman_client_options($self);
   }
   
-  void setOptions(gearman_client_options_t options) {
+  void set_options(gearman_client_options_t options)
+  {
     gearman_client_set_options($self, options);
   }
   
-  void addOptions(gearman_client_options_t options) {
+  void add_options(gearman_client_options_t options)
+  {
     gearman_client_add_options($self, options);
   }
   
-  void removeOptions(gearman_client_options_t options) {
+  void remove_options(gearman_client_options_t options)
+  {
     gearman_client_remove_options($self, options);
   }
   
-  gearman_return_t addServer(const char *host, in_port_t port) {
+  gearman_return_t add_server(const char *host, in_port_t port)
+  {
     return gearman_client_add_server($self, host, port);
   }   
 
-  gearman_return_t addServer(const char *host) {
+  gearman_return_t add_server(const char *host)
+  {
     return gearman_client_add_server($self,
                                      GEARMAN_DEFAULT_TCP_HOST,
                                      GEARMAN_DEFAULT_TCP_PORT);
   }   
 
-  gearman_return_t addServer() {
+  gearman_return_t add_server()
+  {
     return gearman_client_add_server($self,
                                      GEARMAN_DEFAULT_TCP_HOST,
                                      GEARMAN_DEFAULT_TCP_PORT);
   }   
 
-  gearman_return_t addServers(const char *servers) {
+  gearman_return_t add_servers(const char *servers)
+  {
     return gearman_client_add_servers($self, servers);
   }
 
-  void removeServers() {
+  void remove_servers()
+  {
     gearman_client_remove_servers($self);
   }
 
@@ -105,7 +119,7 @@ typedef struct gearman_client_st {} Client;
     return ret;
   }
 
-  gearman_return_t doHigh(const char *function_name,
+  gearman_return_t do_high(const char *function_name,
                           const void *workload, size_t workload_size,
                           char **ret_val, size_t *ret_size,
                           const char *unique= NULL)
@@ -118,7 +132,7 @@ typedef struct gearman_client_st {} Client;
     return ret;
   }
 
-  gearman_return_t doLow(const char *function_name,
+  gearman_return_t do_low(const char *function_name,
                          const void *workload, size_t workload_size,
                          char **ret_val, size_t *ret_size,
                          const char *unique= NULL)
@@ -131,11 +145,13 @@ typedef struct gearman_client_st {} Client;
     return ret;
   }
 
-  const char *jobHandle() {
+  const char *job_handle()
+  {
     return gearman_client_do_job_handle($self);
   }
 
-  void status(uint32_t *numerator, uint32_t *denominator) {
+  void status(uint32_t *numerator, uint32_t *denominator)
+  {
     gearman_client_do_status($self, numerator, denominator);
   }
 

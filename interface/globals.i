@@ -45,7 +45,6 @@ typedef struct gearman_st Gearman;
 typedef struct gearman_client_st Client;
 typedef struct gearman_worker_st Worker;
 typedef struct gearman_job_st Job;
-typedef void do_return;
 
 typedef enum enum_gearman_exception {
   GearmanException
@@ -84,21 +83,4 @@ typedef struct gearman_workload_st {
 %include <libgearman/constants.h>
 
 %typedef uint32_t in_port_t;
-%typedef void do_return;
-
-
-%typemap(in, numinputs=0) (field_buffered *field, size_t *size)
-%{
-  field_buffered field$1;
-  size_t size$2;
-
-  $1= &field$1;
-  $2= &size$2;
-%}
-
-%typemap(in, numinputs=0) (row_buffered *buffer)
-%{
-  row_buffered the_row$1;
-  $1= &the_row$1;
-%}
 

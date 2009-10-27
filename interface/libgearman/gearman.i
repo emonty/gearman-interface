@@ -39,20 +39,24 @@ const char *gearman_bugreport(void);
 typedef struct gearman_st {} Gearman;
 
 
-%extend Gearman {
+%extend Gearman
+{
 
   /* Initialize a library instance structure. */
-  Gearman() {
+  Gearman()
+  {
     return gearman_create(NULL);
   }
 
   /* Free a library instance structure. */
-  ~Gearman() {
+  ~Gearman()
+  {
     gearman_free($self);
   }
 
   /* Clone a library instance structure. */
-  Gearman *copy() {
+  Gearman *copy()
+  {
     return gearman_clone(NULL, $self);
   }
 
@@ -73,26 +77,28 @@ typedef struct gearman_st {} Gearman;
     return gearman_options($self);
   }
 
-  void setOptions(gearman_options_t options)
+  void set_options(gearman_options_t options)
   {
     gearman_set_options($self, options);
   }
 
-  void addOptions(gearman_options_t options)
+  void add_options(gearman_options_t options)
   {
     gearman_add_options($self, options);
   }
 
-  void removeOptions(gearman_options_t options)
+  void remove_options(gearman_options_t options)
   {
     gearman_remove_options($self, options);
   }
 
-  int timeout() {
+  int timeout()
+  {
     return gearman_timeout($self);
   }
 
-  void setTimeout(int timeout) {
+  void set_timeout(int timeout)
+  {
     gearman_set_timeout($self, timeout);
   }
   

@@ -28,15 +28,14 @@
 
 ACLOCAL_AMFLAGS = -I m4
 BUILT_SOURCES= libgearman.xml
-EXTRA_DIST= $(srcdir)/interface/globals.i \
-    ${srcdir}/interface/libgearman/*.i \
-    ${srcdir}/interface/lua/*.i \
-    ${srcdir}/interface/python/*.i \
-    ${srcdir}/interface/python3/*.i \
-    ${srcdir}/interface/ruby/*.i \
-    ${srcdir}/interface/xml/*.i \
-    ${srcdir}/autogen.sh
-CLEANFILES= libmemcached.xml
+EXTRA_DIST= interface/globals.i \
+    interface/libgearman/*.i \
+    interface/lua/*.i \
+    interface/python/*.i \
+    interface/python3/*.i \
+    interface/ruby/*.i \
+    interface/xml/*.i
+CLEANFILES= libgearman.xml
 DISTCLEANFILES=
 # Trick automake into making depdirs in the right places.
 EXTRA_LTLIBRARIES= libswig.la

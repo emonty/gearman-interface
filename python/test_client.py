@@ -22,6 +22,6 @@
 
 from gearman import libgearman
 client = libgearman.Client()
-client.addServer('localhost')
+client.add_server('localhost')
 print client.do('worker_func', 'Hello World!')
 

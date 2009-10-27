@@ -23,14 +23,14 @@ from gearman import libgearman
 
 def worker_func(job):
   """ nothing """ 
-  print("%s{%s} called" % (job.functionName(), job.getUniqueID()))
-  workload= job.getWorkload()
+  print("%s{%s} called" % (job.function_name(), job.unique()))
+  workload= job.get_workload()
   print(workload)
   return workload
 
 worker = libgearman.Worker()
-worker.addTimeout(5000)
-worker.addServer('localhost')
-worker.addFunction("worker_func", worker_func)
+worker.add_timeout(5000)
+worker.add_server('localhost')
+worker.add_function("worker_func", worker_func)
 while True:
   worker.work() 

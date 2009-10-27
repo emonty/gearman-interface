@@ -31,38 +31,45 @@
 
 typedef struct gearman_job_st {} Job;
 
-%extend Job {
+%extend Job
+{
 
-  gearman_return_t sendStatus(uint32_t numerator, uint32_t denominator) {
+  gearman_return_t send_status(uint32_t numerator, uint32_t denominator)
+  {
     return gearman_job_send_status($self, numerator, denominator);
   }
 
-  gearman_return_t sendFail() {
+  gearman_return_t send_fail()
+  {
     return gearman_job_send_fail($self);
   }
 
   /**
    * Get job handle.
    */
-  char *getHandle() {
+  char *job_handle()
+  {
     return gearman_job_handle($self);
   }
 
   /**
    * Get the function name associated with a job.
    */
-  char *functionName() {
+  char *function_name()
+  {
     return gearman_job_function_name($self);
   }
 
   /**
    * Get the unique ID associated with a job.
    */
-  const char *getUniqueID() {
+  const char *unique()
+  {
     return gearman_job_unique($self);
   }
 
-  gearman_workload getWorkload() {
+  gearman_workload get_workload()
+  {
     gearman_workload workload;
     workload.workload= gearman_job_workload($self);
     workload.workload_size= gearman_job_workload_size($self);
