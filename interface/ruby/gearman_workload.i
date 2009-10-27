@@ -29,27 +29,6 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-%module libgearman
-%include "typemaps.i"
-
-%include "interface/globals.i"
-
-%include "interface/python/gearman_workload.i"
-%include "interface/python/buffer_input.i"
-%include "interface/python/value_return.i"
-%include "interface/python/worker_callback.i"
-
-%buffer_input(const void *workload, size_t workload_size)
-
-%include "interface/libgearman/gearman.i"
-%include "interface/libgearman/client.i"
-%include "interface/libgearman/worker.i"
-%include "interface/libgearman/job.i"
-
-
-%pythoncode %{
-
-Worker.register = new_instancemethod(_libgearman.Worker_register_function,None,Worker)
-
-%}
-
+%typemap(out, fragment="SWIG_FromCharPtrAndSize") gearman_workload {
+  $result = SWIG_FromCharPtrAndSize($1.workload, $1.workload_size);
+}
