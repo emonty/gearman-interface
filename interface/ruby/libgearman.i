@@ -47,6 +47,7 @@
 %include "interface/ruby/worker_callback.i"
 %include "interface/ruby/value_return.i"
 %include "interface/ruby/gearman_workload.i"
+%include "interface/ruby/job_handle_out.i"
 
 %include "interface/libgearman/gearman.i"
 %include "interface/libgearman/client.i"
