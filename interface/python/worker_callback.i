@@ -56,7 +56,9 @@
       *result_size= 0;
       PyErr_Clear();
       if (result)
+      {
         Py_DECREF(result);
+      }
       return NULL;
     }
 
