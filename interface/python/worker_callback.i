@@ -52,10 +52,11 @@
     PyObject *py_error= PyErr_Occurred();
     if (py_error != NULL)
     {
-      *ret_ptr= GEARMAN_WORK_EXCEPTION;
+      *ret_ptr= GEARMAN_WORK_FAIL;
       *result_size= 0;
       PyErr_Clear();
-      Py_DECREF(result);
+      if (result)
+        Py_DECREF(result);
       return NULL;
     }
 
