@@ -84,3 +84,12 @@ typedef struct gearman_workload_st {
 
 %typedef uint32_t in_port_t;
 
+/* There should only ever be one of these per-function. Any more will have
+ *    namespace collisions. But we specifically want to name it something
+ *       known so we can reference it in exception handlers. */
+%typemap(in, numinputs=0) (gearman_return_t *gearman_return_value)
+%{
+  gearman_return_t gearman_return_value;
+  $1= &gearman_return_value;
+%}
+

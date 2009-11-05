@@ -38,6 +38,7 @@
 %include "interface/python/buffer_input.i"
 %include "interface/python/value_return.i"
 %include "interface/python/worker_callback.i"
+%include "interface/python/job_handle_out.i"
 
 %buffer_input(const void *workload, size_t workload_size)
 

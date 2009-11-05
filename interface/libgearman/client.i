@@ -145,14 +145,59 @@ typedef struct gearman_client_st {} Client;
     return ret;
   }
 
-  const char *job_handle()
+  const char *do_job_handle()
   {
     return gearman_client_do_job_handle($self);
   }
 
-  void status(uint32_t *numerator, uint32_t *denominator)
+  void do_status(uint32_t *numerator, uint32_t *denominator)
   {
     gearman_client_do_status($self, numerator, denominator);
+  }
+
+   
+  gearman_return_t do_background(const char *function_name,
+                                 const void *workload,
+                                 size_t workload_size,
+                                 char *job_handle_out,
+                                 const char *unique= NULL)
+  {
+    return gearman_client_do_background($self, function_name, unique,
+                                        workload, workload_size,
+                                        job_handle_out);
+  }
+
+  gearman_return_t do_high_background(const char *function_name,
+                                      const void *workload,
+                                      size_t workload_size,
+                                      char *job_handle_out,
+                                      const char *unique= NULL)
+  {
+    return gearman_client_do_high_background($self, function_name, unique,
+                                             workload, workload_size,
+                                             job_handle_out);
+  }
+
+  gearman_return_t do_low_background(const char *function_name,
+                                     const void *workload,
+                                     size_t workload_size,
+                                     char *job_handle_out,
+                                     const char *unique= NULL)
+  {
+    return gearman_client_do_low_background($self, function_name, unique,
+                                            workload, workload_size,
+                                            job_handle_out);
+  }
+
+  %apply bool *OUTPUT { bool *is_known, bool *is_running };
+  %apply uint32_t *OUTPUT { uint32_t *numerator, uint32_t *denominator };
+  gearman_return_t job_status(const char *job_handle,
+                              bool *is_known, bool *is_running,
+                              uint32_t *numerator,
+                              uint32_t *denominator)
+  {
+    return gearman_client_job_status($self, job_handle, is_known, is_running,
+                                     numerator, denominator);
   }
 
 
