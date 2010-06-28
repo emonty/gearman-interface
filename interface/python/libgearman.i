@@ -41,7 +41,7 @@
 
 %buffer_input(const void *workload, size_t workload_size)
 
-%include "interface/libgearman/gearman.i"
+%include "interface/libgearman/universal.i"
 %include "interface/libgearman/client.i"
 %include "interface/libgearman/worker.i"
 %include "interface/libgearman/job.i"
