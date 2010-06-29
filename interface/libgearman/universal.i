@@ -36,7 +36,7 @@ const char *gearman_version(void);
 const char *gearman_bugreport(void);
 
 
-typedef struct gearman_st {} Gearman;
+typedef struct gearman_universal_st {} Gearman;
 
 
 %extend Gearman
@@ -45,73 +45,73 @@ typedef struct gearman_st {} Gearman;
   /* Initialize a library instance structure. */
   Gearman()
   {
-    return gearman_create(NULL);
+    return gearman_universal_create(NULL);
   }
 
   /* Free a library instance structure. */
   ~Gearman()
   {
-    gearman_free($self);
+    gearman_universal_free($self);
   }
 
   /* Clone a library instance structure. */
   Gearman *copy()
   {
-    return gearman_clone(NULL, $self);
+    return gearman_universal_clone(NULL, $self);
   }
 
   /* Return an error string for last library error encountered. */
   const char *error()
   {
-    return gearman_error($self);
+    return gearman_universal_error($self);
   }
 
   /* Value of errno in the case of a GEARMAN_ERRNO return value. */
   int errno()
   {
-    return gearman_errno($self);
+    return gearman_universal_errno($self);
   }
 
-  gearman_options_t options()
+  gearman_universal_options_t options()
   {
-    return gearman_options($self);
+    return gearman_universal_options($self);
   }
 
-  void set_options(gearman_options_t options)
+  void set_options(gearman_universal_options_t options)
   {
-    gearman_set_options($self, options);
+    gearman_universal_set_options($self, options);
   }
 
-  void add_options(gearman_options_t options)
+  void add_options(gearman_universal_options_t options)
   {
-    gearman_add_options($self, options);
+    gearman_universal_add_options($self, options);
   }
 
-  void remove_options(gearman_options_t options)
+  void remove_options(gearman_universal_options_t options)
   {
-    gearman_remove_options($self, options);
+    gearman_universal_remove_options($self, options);
   }
 
   int timeout()
   {
-    return gearman_timeout($self);
+    return gearman_universal_timeout($self);
   }
 
   void set_timeout(int timeout)
   {
-    gearman_set_timeout($self, timeout);
+    gearman_universal_set_timeout($self, timeout);
   }
   
   /**
    * Set logging callback for gearman instance.
    * @param gearman Gearman instance structure previously initialized with
-   *        gearman_create.
+   *        gearman_universal_create.
    * @param log_fn Function to call when there is a logging message.
    * @param log_fn_arg Argument to pass into the log callback function.
    * @param verbose Verbosity level.
    */
 /*TODO:
-  void gearman_set_log(gearman_st *gearman, gearman_log_fn log_fn,
+  void gearman_set_log_fn(gearman_universal_st *gearman, gearman_log_fn log_fn,
                        void *log_fn_arg, gearman_verbose_t verbose);
 */
 
@@ -119,7 +119,7 @@ typedef struct gearman_st {} Gearman;
    * Set custom I/O event callbacks for a gearman structure.
    */
 /*TODO:
-  void gearman_set_event_watch(gearman_st *gearman,
+  void gearman_set_event_watch_fn(gearman_universal_st *gearman,
                                gearman_event_watch_fn *event_watch,
                                void *event_watch_arg);
 */

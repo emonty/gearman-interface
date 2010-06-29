@@ -49,7 +49,7 @@
 %include "interface/ruby/gearman_workload.i"
 %include "interface/ruby/job_handle_out.i"
 
-%include "interface/libgearman/gearman.i"
+%include "interface/libgearman/universal.i"
 %include "interface/libgearman/client.i"
 %include "interface/libgearman/worker.i"
 %include "interface/libgearman/job.i"
