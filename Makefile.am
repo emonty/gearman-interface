@@ -32,7 +32,6 @@ EXTRA_DIST= interface/globals.i \
     interface/libgearman/*.i \
     interface/lua/*.i \
     interface/python/*.i \
-    interface/python3/*.i \
     interface/ruby/*.i \
     interface/xml/*.i
 CLEANFILES= libgearman.xml
