@@ -33,6 +33,5 @@
 
 %include "interface/globals.i"
 
-%include "interface/libgearman/universal.i"
 %include "interface/libgearman/client.i"
 %include "interface/libgearman/worker.i"

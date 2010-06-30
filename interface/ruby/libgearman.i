@@ -40,7 +40,7 @@
 }
 
 
-%rename(Gearman) gearman_st;
+/*%rename(Gearman) gearman_st;*/
 %rename(Client) gearman_client_st;
 %rename(Worker) gearman_worker_st;
 
@@ -48,7 +48,6 @@
 %include "interface/ruby/value_return.i"
 %include "interface/ruby/gearman_workload.i"
 
-%include "interface/libgearman/universal.i"
 %include "interface/libgearman/client.i"
 %include "interface/libgearman/worker.i"
 %include "interface/libgearman/job.i"
