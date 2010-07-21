@@ -33,7 +33,15 @@ EXTRA_DIST= interface/globals.i \
     interface/lua/*.i \
     interface/python/*.i \
     interface/ruby/*.i \
-    interface/xml/*.i
+    interface/xml/*.i \
+    python/gearman/__init__.py \
+    python/setup.py \
+    python/ez_setup.py \
+    python3/gearman/__init__.py \
+    python3/setup.py \
+    ruby/ext/extconf.rb \
+    ruby/*.rb \
+    ruby/Rakefile
 CLEANFILES= libgearman.xml
 DISTCLEANFILES=
 # Trick automake into making depdirs in the right places.
