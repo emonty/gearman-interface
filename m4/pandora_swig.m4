@@ -11,7 +11,7 @@ dnl From Monty Taylor
 
 AC_DEFUN([PANDORA_SWIG],[
 
-  AC_PROG_SWIG(1.3.31)
+  AC_PROG_SWIG(2.0)
   
   AC_DEFINE_UNQUOTED([SWIG_TYPE_TABLE],
     [$PACKAGE],
