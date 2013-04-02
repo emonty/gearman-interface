@@ -39,7 +39,7 @@
 %feature("autodoc", "1");
 
 %{
-#include <libgearman/gearman.h>
+#include <libgearman-1.0/gearman.h>
 
 typedef struct gearman_st Gearman;
 typedef struct gearman_client_st Client;
@@ -80,7 +80,7 @@ typedef struct gearman_workload_st {
 %ignore gearman_packet_pack_fn;
 %ignore gearman_packet_unpack_fn;
 
-%include <libgearman/constants.h>
+%include <libgearman-1.0/constants.h>
 
 %typedef uint32_t in_port_t;
 

@@ -18,7 +18,7 @@ AC_DEFUN([_PANDORA_SEARCH_LIBGEARMAN],[
 
   AS_IF([test "x$ac_enable_libgearman" = "xyes"],[
     AC_LIB_HAVE_LINKFLAGS(gearman,,[
-      #include <libgearman/gearman.h>
+      #include <libgearman-1.0/gearman.h>
     ],[
       gearman_client_st gearman_client;
       gearman_client_context(&gearman_client);
